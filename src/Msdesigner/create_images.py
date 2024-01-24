@@ -56,19 +56,21 @@ class CreateImg:
         try:
             data = f'------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-caption"\r\n\r\n{prompt}\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-scenario-name"\r\n\r\nTextToImage\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-batch-size"\r\n\r\n1\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-image-response-format"\r\n\r\nUrlWithBase64Thumbnail\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-seed"\r\n\r\n112\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO--\r\n'
             headers = self.headers
-            headers['userid'] = self.user_id
-            headers['authorization'] = self.auth_token
-            headers['sessionid'] = self.session_id
             response = self.client.post(
                 self.url,
                 params=self.params,
                 data=data,
                 timeout=60,
+                headers={
+                    'userid': self.user_id,
+                    'authorization': self.auth_token,
+                    'sessionid': self.session_id,
+                }
             )
             if not self.quiet:
-                print(f"Response: {response.status_code}")
+                print(f"Response: {response}")
             if self.debug_file:
-                self.debug(f"Response: {response.status_code}")
+                self.debug(f"Response: {response}")
             if response.status_code == 200:
                 img = response.json()['image_urls_thumbnail'][0]['ImageUrl']
                 self.client.close()
@@ -84,15 +86,15 @@ class CreateImg:
 
     def save_images(self,
                     link: str,
-                    save_path: str,
-                    file_name: str) -> None:
+                    save_path: str | None,
+                    file_name: str | None) -> None:
         if not self.quiet:
             print("Saving image...")
         if self.debug_file:
             self.debug("Saving image...")
 
         try:
-            fn = f"{file_name}" if file_name else f"{int(time.time())}.png"
+            fn = f"{file_name}.png" if file_name else f"{int(time.time())}.png"
             path = f"{save_path}" if save_path else os.mkdir("images")
             response = self.client.get(link)
             if response.status_code == 200:
@@ -110,6 +112,13 @@ class CreateImg:
                 print(f"Error while saving image.{e}")
             if self.debug_file:
                 self.debug(f"Error while saving image: {e}")
+
+
+def create_image(prompt: str, save_path: str | None, user_id: str, auth_token: str, session_id: str) -> None:
+    """Create image using Microsoft Designer API"""
+    image_generator = CreateImg(user_id, auth_token, session_id)
+    image_link = image_generator.gen_images(prompt)
+    image_generator.save_images(image_link, save_path)
 
 
 class CreateImgAsync(CreateImg):
@@ -130,14 +139,16 @@ class CreateImgAsync(CreateImg):
         try:
             data = f'------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-caption"\r\n\r\n{prompt}\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-scenario-name"\r\n\r\nTextToImage\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-batch-size"\r\n\r\n1\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-image-response-format"\r\n\r\nUrlWithBase64Thumbnail\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO\r\nContent-Disposition: form-data; name="dalle-seed"\r\n\r\n112\r\n------WebKitFormBoundaryzdakYnMWm0iQFcfO--\r\n'
             headers = self.headers
-            headers['userid'] = self.user_id
-            headers['authorization'] = self.auth_token
-            headers['sessionid'] = self.session_id
             response = await self.client.post(
                 self.url,
                 params=self.params,
                 data=data,
                 timeout=60,
+                headers={
+                    'userid': self.user_id,
+                    'authorization': self.auth_token,
+                    'sessionid': self.session_id,
+                }
             )
             if not self.quiet:
                 print(f"Response: {response.status_code}")
@@ -158,8 +169,8 @@ class CreateImgAsync(CreateImg):
 
     async def async_save_images(self,
                                 link: str,
-                                save_path: str,
-                                file_name: str) -> None:
+                                save_path: str | None,
+                                file_name: str | None) -> None:
         if not self.quiet:
             print("Saving image...")
         if self.debug_file:
@@ -186,6 +197,12 @@ class CreateImgAsync(CreateImg):
             if self.debug_file:
                 self.debug(f"Error while saving image: {e}")
 
+
+async def async_create_image(prompt: str, save_path: str | None, user_id: str, auth_token: str, session_id: str) -> None:
+    """Create image using Microsoft Designer API"""
+    image_generator = CreateImgAsync(user_id, auth_token, session_id)
+    image_link = image_generator.async_gen_images(prompt)
+    await image_generator.async_save_images(image_link, save_path)
 
 def main():
     parser = argparse.ArgumentParser(description="Generate images using Microsoft Designer API")

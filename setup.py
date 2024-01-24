@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="MicrosoftDesigner",
-    version="0.0.2",
+    version="0.0.3",
     license="GNU General Public License v2.0",
     author="Talaviya Bhavik",
     author_email="talaviyabhavik@proton.me",
