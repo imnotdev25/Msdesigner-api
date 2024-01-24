@@ -3,11 +3,11 @@ from setuptools import setup
 
 setup(
     name="MicrosoftDesigner",
-    version="0.0.1",
+    version="0.0.2",
     license="GNU General Public License v2.0",
     author="Talaviya Bhavik",
     author_email="talaviyabhavik@proton.me",
-    description="High quality image generation by Microsoft. Reverse engineered API.",
+    description="High quality image generation by Microsoft Designer. Reverse engineered API.",
     packages=find_packages("src"),
     package_dir={"": "src"},
     url="https://github.com/imnotdev25/Msdesigner-api",
@@ -16,9 +16,7 @@ setup(
     },
     install_requires=[
         "httpx",
-        "undetected-chromedriver",
-        "browser_cookie3",
-        "selenium"
+        "undetected-chromedriver"
     ],
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
