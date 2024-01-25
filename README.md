@@ -2,7 +2,7 @@
 
 ### Installation
 
-```bash pip3 install MicrosoftDesigner```
+```$ pip3 install MicrosoftDesigner```
 
 ### Usage
 
@@ -30,8 +30,25 @@ options:
 - Find the request with post method and copy the request headers
 - Copy the user id, auth token and session id from the request headers
 - Run the script with the copied values
+- Note: **auth_token will expire after 24 hours**
 
 ```
 $ python3 -m MicrosoftDesigner --user_id <user_id> --auth_token <auth_token> --session_id <session_id> --prompt <prompt> --save_path <save_path> --file_name <file_name>
 
 ```
+### **Python Example**
+
+
+```
+
+from Msdesigner.create_images import create_image
+create_image(user_id, auth_token, prompt)
+
+# Image wiil be saved in images folder
+# Async function
+
+from Msdesigner.create_images import async_create_image
+async_create_image(user_id, auth_token, prompt)
+
+```
+
