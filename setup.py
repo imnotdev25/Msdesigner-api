@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="MicrosoftDesigner",
-    version="0.0.3",
+    version="0.0.4",
     license="GNU General Public License v2.0",
     author="Talaviya Bhavik",
     author_email="talaviyabhavik@proton.me",
@@ -16,7 +16,7 @@ setup(
     },
     install_requires=[
         "httpx",
-        "undetected-chromedriver"
+        ""
     ],
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
