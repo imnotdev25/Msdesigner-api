@@ -179,16 +179,12 @@ def main():
     parser = argparse.ArgumentParser(description="Generate images using Microsoft Designer API")
     parser.add_argument("--user_id", help="User ID", required=True)
     parser.add_argument("--auth_token", help="Auth Token", required=True)
-    parser.add_argument("--session_id", help="Session ID", required=True)
     parser.add_argument("--prompt", help="Prompt", required=True)
     parser.add_argument("--save_path", help="Save Path", required=False)
     parser.add_argument("--file_name", help="File Name", required=False)
-    parser.add_argument("--debug_file", help="Debug File", required=False)
-    parser.add_argument("--quiet", help="Quiet", required=False)
     args = parser.parse_args()
     user_id = args.user_id
     auth_token = args.auth_token
-    session_id = args.session_id
     prompt = args.prompt
     save_path = args.save_path
     file_name = args.file_name
@@ -209,11 +205,11 @@ def main():
     if not args.asyncio:
         image_generator = CreateImg(user_id, auth_token)
         image_link = image_generator.gen_images(prompt)
-        image_generator.save_images(image_link, save_path, file_name)
+        image_generator.save_images(image_link)
     else:
         image_generator = CreateImgAsync(user_id, auth_token)
         image_link = asyncio.run(image_generator.async_gen_images(prompt))
-        asyncio.run(image_generator.async_save_images(image_link, save_path, file_name))
+        asyncio.run(image_generator.async_save_images(image_link))
 
 
 if __name__ == "__main__":
