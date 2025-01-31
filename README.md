@@ -34,19 +34,16 @@ options:
 - Note: **auth_token will expire after 24 hours**
 - Note: **Do not pass resolution other than 1024x1024, 1024x1792, 1792x1024**
 
-```
+```bash
 $ python3 -m MicrosoftDesigner --user_id <user_id> --auth_token <auth_token> --prompt <prompt> --resolution <resolution> --save_path <save_path>
 
 ```
 ### **Python Example**
 
-```
-
-from ssdesigner.gen_images import create_image
+```python
+from msdesigner.gen_images import create_image
 create_image(user_id, auth_token, prompt, resolution)
 
 # Image wiil be saved in images folder
-
-
 ```
 
