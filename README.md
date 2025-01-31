@@ -19,6 +19,9 @@ options:
                         File Path to save the output (optional)
   --file_name FILE_NAME
                         File Name to save the output (optional)
+  --resolution RESOLUTION
+                        Resolution of the image (optional)
+                        (default: 1024x1024, available: 1024x1792, 1792x1024)
 
 ```
 ## Getting Started
@@ -29,24 +32,21 @@ options:
 - Copy the user id, auth token (Authorization: value) from the request headers
 - Run the script with the copied values
 - Note: **auth_token will expire after 24 hours**
+- Note: **Do not pass resolution other than 1024x1024, 1024x1792, 1792x1024**
 
 ```
-$ python3 -m MicrosoftDesigner --user_id <user_id> --auth_token <auth_token> --prompt <prompt>
+$ python3 -m MicrosoftDesigner --user_id <user_id> --auth_token <auth_token> --prompt <prompt> --resolution <resolution> --save_path <save_path>
 
 ```
 ### **Python Example**
 
-
 ```
 
-from Msdesigner.create_images import create_image
-create_image(user_id, auth_token, prompt)
+from Msdesigner.gen_images import create_image
+create_image(user_id, auth_token, prompt, resolution)
 
 # Image wiil be saved in images folder
-# Async function
 
-from Msdesigner.create_images import async_create_image
-async_create_image(user_id, auth_token, prompt)
 
 ```
 
