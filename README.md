@@ -42,7 +42,7 @@ $ python3 -m MicrosoftDesigner --user_id <user_id> --auth_token <auth_token> --p
 
 ```
 
-from Msdesigner.gen_images import create_image
+from ssdesigner.gen_images import create_image
 create_image(user_id, auth_token, prompt, resolution)
 
 # Image wiil be saved in images folder
