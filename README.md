@@ -2,12 +2,12 @@
 
 ### Installation
 
-```$ pip3 install MicrosoftDesigner```
+```$ pip3 install microsoftdesigner```
 
 ### Usage
 
 ``` 
-$ python3 -m MicrosoftDesigner -h
+$ python3 -m microsoftdesigner -h
 
 options:
   -h, --help            show this help message and exit
@@ -35,15 +35,15 @@ options:
 - Note: **Do not pass resolution other than 1024x1024, 1024x1792, 1792x1024**
 
 ```bash
-$ python3 -m MicrosoftDesigner --user_id <user_id> --auth_token <auth_token> --prompt <prompt> --resolution <resolution> --save_path <save_path>
+$ python3 -m microsoftdesigner --user_id <user_id> --auth_token <auth_token> --prompt <prompt> --resolution <resolution> --save_path <save_path>
 
 ```
 ### **Python Example**
 
 ```python
-from msdesigner.gen_images import create_image
-create_image(user_id, auth_token, prompt, resolution)
+from microsoftdesigner.gen_images import create_img
+create_img(user_id, auth_token, prompt, resolution)
 
-# Image wiil be saved in images folder
+# Image will be saved in images folder
 ```
 

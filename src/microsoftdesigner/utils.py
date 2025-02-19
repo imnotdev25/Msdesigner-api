@@ -5,8 +5,7 @@ from uuid import uuid4
 
 from bs4 import BeautifulSoup
 from httpx import Client
-
-from msdesigner.logger import logger
+from microsoftdesigner.logger import logger
 
 
 def get_urls_from_html(html: str) -> list:

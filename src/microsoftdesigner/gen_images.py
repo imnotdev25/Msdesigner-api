@@ -3,10 +3,9 @@ import sys
 import time
 
 import httpx
-
-from msdesigner.constants import HEADERS, PARAMS, MS_BASE_URL
-from msdesigner.logger import logger
-from msdesigner.utils import clean_urls, download_images, get_urls_from_html, get_bing_id, get_random_boundary
+from microsoftdesigner.constants import HEADERS, PARAMS, MS_BASE_URL
+from microsoftdesigner.logger import logger
+from microsoftdesigner.utils import clean_urls, download_images, get_urls_from_html, get_bing_id, get_random_boundary
 
 
 def create_img(user_id: str, auth_token: str, prompt: str, save_path: str = 'images',
@@ -126,7 +125,7 @@ def main():
 
     if not args.user_id or not args.auth_token or not args.session_id or not args.prompt:
         logger.error(
-            "Please provide all the required arguments. Run 'python -m MicrosoftDesigner --help' for more info.")
+            "Please provide all the required arguments. Run 'python -m microsoftdesigner --help' for more info.")
         sys.exit(1)
     create_img(user_id, auth_token, prompt, save_path, resolution)
 
