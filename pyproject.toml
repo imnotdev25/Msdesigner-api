@@ -24,9 +24,9 @@ dependencies = [
     "httpx>=0.28.1",
     "beautifulsoup4>=4.12.3",
     "lxml>=5.3",
+    "python-dotenv",
 ]
 
 [project.urls]
 Homepage = "https://github.com/imnotdev25/Msdesigner-api"
 Issues = "https://github.com/imnotdev25/Msdesigner-api/issues"
-

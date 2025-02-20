@@ -1,41 +1,38 @@
 import os
 import random
-from urllib.parse import urlparse, urlunparse
 from uuid import uuid4
 
-from bs4 import BeautifulSoup
 from httpx import Client
 from microsoftdesigner.logger import logger
 
 
-def get_urls_from_html(html: str) -> list:
-    soup = BeautifulSoup(html, 'html.parser')
-    logger.info(f"Found {len(soup.find_all('img', {'data-src': True}))} urls")
-    return [img['data-src'] for img in soup.find_all('img', {'data-src': True})]
+def download_images(urls: list, save_path: str = 'images', resolution: str = '1024x1024') -> list:
+    """
+    Download images from URLs and save them to specified path
+    :param urls: List of image URLs to download
+    :param save_path: Base directory path to save images
+    :param resolution: Resolution for folder organization (1024x1024, 1024x1792, 1792x1024)
+    :return: List of saved image file paths
+    """
+    # Create resolution-specific folder
+    folder_path = os.path.join(save_path, resolution)
+    os.makedirs(folder_path, exist_ok=True)
 
-
-def clean_urls(urls: list) -> list:
-    parsed_urls = [urlparse(url) for url in urls]
-    logger.info(f"Before url cleaning: {len(parsed_urls)}")
-    return [urlunparse(parsed_url._replace(query="")) for parsed_url in parsed_urls]
-
-
-def download_images(urls: list, save_path: str) -> list:
-    os.makedirs(save_path, exist_ok=True)
     client = Client()
     img_paths = []
     for url in urls:
         resp = client.get(url, timeout=10)
-        with open(f"{save_path}/{uuid4()}.jpg", "wb") as f:
+        with open(f"{folder_path}/{uuid4()}.jpg", "wb") as f:
             f.write(resp.content)
             f.close()
         img_paths.append(f.name)
     return img_paths
 
 
-def get_bing_id(url: str) -> str:
-    return urlparse(url).path.split("/")[-1]
-
-
 def get_random_boundary() -> str:
-    return str(random.randint(10 ** 27, 10 ** 28 - 1))
+    """
+    Generate a random WebKit-style boundary for multipart form data
+    :return: Random boundary string
+    """
+    timestamp = int(random.random() * 1000000000)
+    return f"WebKitFormBoundary{''.join(['abcdef'[int(i) % 6] for i in str(timestamp)])}"
