@@ -3,7 +3,6 @@ import random
 from uuid import uuid4
 
 from httpx import Client
-from microsoftdesigner.logger import logger
 
 
 def download_images(urls: list, save_path: str = 'images', resolution: str = '1024x1024') -> list:

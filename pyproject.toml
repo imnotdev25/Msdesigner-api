@@ -24,7 +24,7 @@ dependencies = [
     "httpx>=0.28.1",
     "beautifulsoup4>=4.12.3",
     "lxml>=5.3",
-    "python-dotenv",
+    "python-dotenv>=0.21.1",
 ]
 
 [project.urls]
